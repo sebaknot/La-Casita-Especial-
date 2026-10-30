@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+@theme {
+  /* La Casita — white, soft blue, baby green */
+  --color-canvas: #f5f8fc;
+  --color-surface: #ffffff;
+  --color-sunk: #eef3f9;
+  --color-line: #dfe6ef;
+  --color-line-strong: #c7d2e0;
+  --color-ink: #1c2a3a;
+  --color-ink-dim: #4f5d70;
+  --color-ink-faint: #6e7b8d;
+
+  --color-primary: #2f6fcb;       /* the one accent: buttons, focus, "today" */
+  --color-primary-strong: #245aa8;
+  --color-primary-soft: #e6effb;
+
+  --color-mint: #bfe9d1;          /* baby green: done, positive */
+  --color-mint-soft: #e8f7ee;
+  --color-mint-ink: #1d6b45;
+
+  --color-warn-soft: #fff3df;
+  --color-warn-ink: #8a5300;
+  --color-danger: #b42318;
+  --color-danger-soft: #fdecea;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  /* Large, readable base for 6 a.m. */
+  font-size: 106.25%; /* 17px */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.45;
+}
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+::selection {
+  background: var(--color-primary-soft);
+}
+
+.eyebrow {
+  font-size: 0.76rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Bottom tab bar respects the iPhone home indicator */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ---------- Motion: restrained ---------- */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.rise-in { animation: rise-in 160ms ease-out both; }
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.toast-in { animation: toast-in 160ms ease-out both; }
+
+.ring-progress {
+  transition: stroke-dashoffset 400ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

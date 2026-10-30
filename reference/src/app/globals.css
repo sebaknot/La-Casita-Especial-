@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+@theme {
+  /* Obsidian & Brass */
+  --color-obsidian: #0b0e14;
+  --color-surface: #131826;
+  --color-raised: #1a2133;
+  --color-hairline: #232b3d;
+  --color-ink: #e8e6df;
+  --color-ink-dim: #9aa0ad;
+  --color-ink-faint: #5c6474;
+  --color-brass: #c9a227;
+  --color-brass-soft: #8a7222;
+  --color-signal: #4e7cff;
+  --color-warmstone: #8a8578;
+  --color-success: #3da35d;
+  --color-danger: #c0392b;
+
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+
+  /* command deck: 8px radius max */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 8px;
+  --radius-2xl: 8px;
+  --radius-3xl: 8px;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-obsidian);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Visible keyboard focus in brass */
+:focus-visible {
+  outline: 2px solid var(--color-brass);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-brass) 30%, transparent);
+}
+
+/* Uppercase letterspaced micro-labels */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 72;
+  letter-spacing: -0.01em;
+}
+
+/* Data reads like instrumentation */
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Motion: one orchestrated stagger on page load ---------- */
+@keyframes deck-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger-1 { animation: deck-in 160ms ease-out both; }
+.stagger-2 { animation: deck-in 160ms ease-out 70ms both; }
+.stagger-3 { animation: deck-in 160ms ease-out 140ms both; }
+
+/* Crisp hover: translate 1px, brass hairline */
+.deck-hover {
+  transition: transform 120ms ease, border-color 120ms ease, background-color 120ms ease;
+}
+.deck-hover:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--color-brass) 45%, var(--color-hairline));
+}
+
+/* ---------- Empire Map ---------- */
+@keyframes node-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 162, 39, 0.45); }
+  50% { box-shadow: 0 0 22px 4px rgba(201, 162, 39, 0.25); }
+}
+.node-critical {
+  animation: node-pulse 2.4s ease-in-out infinite;
+  border-color: var(--color-brass) !important;
+}
+
+/* ---------- Command bar mic ---------- */
+@keyframes mic-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.5); }
+  70% { box-shadow: 0 0 0 8px rgba(192, 57, 43, 0); }
+}
+.mic-listening {
+  animation: mic-pulse 1.4s ease-out infinite;
+  color: var(--color-danger);
+}
+
+/* ---------- Education celebration ---------- */
+@keyframes ring-flash {
+  0% { filter: drop-shadow(0 0 0 rgba(201, 162, 39, 0)); transform: scale(1); }
+  40% { filter: drop-shadow(0 0 18px rgba(201, 162, 39, 0.8)); transform: scale(1.06); }
+  100% { filter: drop-shadow(0 0 0 rgba(201, 162, 39, 0)); transform: scale(1); }
+}
+.celebrate {
+  animation: ring-flash 900ms ease-out both;
+}
+@keyframes spark {
+  0% { opacity: 1; transform: translate(0, 0) scale(1); }
+  100% { opacity: 0; transform: translate(var(--sx), var(--sy)) scale(0.4); }
+}
+.spark {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: var(--color-brass);
+  animation: spark 800ms ease-out both;
+  pointer-events: none;
+}
+
+/* ---------- Toasts ---------- */
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.toast-in { animation: toast-in 160ms ease-out both; }
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* thin scrollbars befitting a console */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-hairline) transparent;
+}
